@@ -1,5 +1,8 @@
-import React,{useState} from 'react';
 import './style.css';
+
+import React,{useState} from 'react';
+
+import login from '../api/login'
 
 const Login = () => {
     const [email, setEmail] = useState("");
@@ -7,25 +10,22 @@ const Login = () => {
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
-  
-    const handleSubmit = (event) => {
-      event.preventDefault();
-      if (email === "example@example.com" && password === "password") {
-        if (rememberMe) {
-          localStorage.setItem("loginCredentials", JSON.stringify({ email, password }));
-        } else {
-          localStorage.removeItem("loginCredentials");
-        }
-        setSuccess(true);
-        setEmail("");
-        setPassword("");
-        setTimeout(() => setSuccess(false), 2000);
-        setError(false);
-      } else {
-        setError(true);
+
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      try {
+        const loginData = await login(email, password);
+        // Handle successful login
+        console.log(loginData);
+      } catch (error) {
+        // Handle login error
+        console.error(error);
       }
+      if (rememberMe) {
+        localStorage.setItem("loginCredentials", JSON.stringify({ email, password })); }
     };
   
+
     const handleEmailChange = (event) => {
       setEmail(event.target.value);
     };
@@ -46,7 +46,7 @@ const Login = () => {
     };
   
     return (
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleLogin}>
         <div className='inp-email'>
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" value={email} onChange={handleEmailChange} />
@@ -62,7 +62,7 @@ const Login = () => {
       
   
        <div className='frm-footer'> 
-        <button className='frm-btn' >Submit</button>
+        <button className='frm-btn' onClick={handleLogin}>Submit</button>
         <button onClick={handleReset}  className='frm-btn'>Reset</button></div>
         {error && <div className="error-message">Incorrect email or password</div>}
         {success && <div className="success-message">Login successful</div>}
