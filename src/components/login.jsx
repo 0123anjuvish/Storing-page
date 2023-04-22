@@ -1,7 +1,10 @@
-import React,{useState} from 'react';
 import './style.css';
 import user from '../images/user.png';
 import { NavLink } from 'react-router-dom';
+
+import React,{useState} from 'react';
+
+import login from '../api/login'
 
 const Login = () => {
   const [name, setName] = useState("");
@@ -10,6 +13,7 @@ const Login = () => {
     const [rememberMe, setRememberMe] = useState(false);
     const [error, setError] = useState(false);
     const [success, setSuccess] = useState(false);
+<<<<<<< HEAD
   
     const handleSubmit = (event) => {
       event.preventDefault();
@@ -27,11 +31,30 @@ const Login = () => {
         setError(false);
       } else {
         setError(true);
+=======
+
+    const handleLogin = async (e) => {
+      e.preventDefault();
+      try {
+        const loginData = await login(email, password);
+        // Handle successful login
+        console.log(loginData);
+      } catch (error) {
+        // Handle login error
+        console.error(error);
+>>>>>>> 6f18841bcd4d00bd6c14e5be79dfc5a277b70466
       }
+      if (rememberMe) {
+        localStorage.setItem("loginCredentials", JSON.stringify({ email, password })); }
     };
+<<<<<<< HEAD
     const handleNameChange = (event) => {
       setName(event.target.value);
     };
+=======
+  
+
+>>>>>>> 6f18841bcd4d00bd6c14e5be79dfc5a277b70466
     const handleEmailChange = (event) => {
       setEmail(event.target.value);
     };
@@ -53,6 +76,7 @@ const Login = () => {
     };
   
     return (
+<<<<<<< HEAD
       <>
       <div className='login'>
       <div className='frm-cont'>
@@ -64,6 +88,9 @@ const Login = () => {
           <label htmlFor="name">Name:</label>
           <input type="name" id="name" value={name} onChange={handleNameChange} />
         </div>
+=======
+      <form onSubmit={handleLogin}>
+>>>>>>> 6f18841bcd4d00bd6c14e5be79dfc5a277b70466
         <div className='inp-email'>
           <label htmlFor="email">Email:</label>
           <input type="email" id="email" value={email} onChange={handleEmailChange} />
@@ -79,9 +106,14 @@ const Login = () => {
       
   
        <div className='frm-footer'> 
+<<<<<<< HEAD
        <NavLink to ="/home"> <button className='frm-btn' >Submit</button></NavLink>
         <button onClick={handleReset}  className='frm-btn1'>Reset</button></div>
 
+=======
+        <button className='frm-btn' onClick={handleLogin}>Submit</button>
+        <button onClick={handleReset}  className='frm-btn'>Reset</button></div>
+>>>>>>> 6f18841bcd4d00bd6c14e5be79dfc5a277b70466
         {error && <div className="error-message">Incorrect email or password</div>}
         {success && <div className="success-message">Login successful</div>}
       </form>

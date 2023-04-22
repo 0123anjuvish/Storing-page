@@ -105,7 +105,7 @@ const Header = () => {
       </div>
 
       <div id='main'>
-        <button type='add' className='crt'>Create
+        <button type='add' className='crt'><Create/>
           <span><RiFolderAddLine className='fld' /></span>
         </button>
 
@@ -113,7 +113,7 @@ const Header = () => {
           Upload
           <span> <RiUploadCloud2Line className='ld' /></span>
         </button>
-        <Create/>
+        
         {isDropdownOpen && (
           <div className='dpdwn'>
             <button onClick={() => handleFileClick('file')} className='dd-btn'>File </button>
