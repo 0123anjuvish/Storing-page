@@ -2,9 +2,11 @@ import React from 'react'
 import { TfiFiles } from "react-icons/tfi";
 import { RiDeleteBin6Line } from "react-icons/ri";
 import { CiSettings,CiTimer } from "react-icons/ci";
+import Header from './header';
 const Home = () => {
   return (
     <>
+    <Header/>
     <div id='side'>
       <div className='header'> Admin Name</div>
        

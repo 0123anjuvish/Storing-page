@@ -1,11 +1,44 @@
-import React from 'react'
+import React, { useState } from "react";
 
-const Files = () => {
+function Files() {
+  const [file, setFile] = useState(null);
+
+  // const UPLOAD_ENDPOINT =
+  const UPLOAD_ENDPOINT = "http://localhost:3001";
+
+  const handleSubmit = async e => {
+    e.preventDefault();
+
+    try {
+      let res = await uploadFile(file);
+      console.log(res.statusText);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const uploadFile = async file => {
+    const formData = new FormData();
+    formData.append("avatar", file);
+
+    return await fetch(UPLOAD_ENDPOINT, {
+      method: "POST",
+      body: formData,
+    });
+  };
+
+  const handleOnChange = e => {
+    console.log(e.target.files[0]);
+    setFile(e.target.files[0]);
+  };
+
   return (
-    <div>
-      
-    </div>
-  )
+    <form onSubmit={handleSubmit}>
+    
+      <input type="file" className="choose" onChange={handleOnChange} />
+      <button type="submit" className="ul">Upload File</button>
+    </form>
+  );
 }
 
 export default Files;
