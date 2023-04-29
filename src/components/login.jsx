@@ -17,12 +17,14 @@ const Login = () => {
         const loginData = await login(email, password);
         // Handle successful login
         console.log(loginData);
+        console.log(loginData.access_token)
+        localStorage.setItem("token", loginData.access_token); 
       } catch (error) {
         // Handle login error
         console.error(error);
       }
       if (rememberMe) {
-        localStorage.setItem("loginCredentials", JSON.stringify({ email, password })); }
+        localStorage.setItem("loginCredentials", JSON.stringify({ "email" : email,"password" : password })); }
     };
   
 
