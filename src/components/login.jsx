@@ -1,10 +1,10 @@
 import './style.css';
-import user from '../images/user.png';
-import { NavLink } from 'react-router-dom';
 
 import React,{useState} from 'react';
 
+import { NavLink } from 'react-router-dom';
 import login from '../api/login'
+import user from '../images/user.png';
 
 const Login = () => {
   
@@ -77,7 +77,6 @@ const Login = () => {
         <button onClick={handleReset}  className='frm-btn'>Reset</button>
         
         </div>
-        <NavLink to ='/home'>Go Home</NavLink>
         {error && <div className="error-message">Incorrect email or password</div>}
         {success && <div className="success-message">Login successful</div>}
       </form>

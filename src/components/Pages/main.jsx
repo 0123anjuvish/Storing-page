@@ -1,13 +1,71 @@
-import React from 'react'
+import React, { useState } from "react";
+import { RiFolderAddLine, RiSkipBackLine, RiUploadCloud2Line } from "react-icons/ri";
+
+import Create from "./createFolder";
 import { ImDownload } from "react-icons/im";
 import { MdDeleteForever } from "react-icons/md";
+import Modal from "./Modal";
+import {RiFolderFill} from "react-icons/ri";
 
 const Main = () => {
+  const [isfolder, setFolders] = useState(true)
+  const [isRoot, setRoot] = useState(true)
+  const [isOpen, setIsOpen] = useState(false);
+  const [selectedOption, setSelectedOption] = useState(null);
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [isDpdnOpen, setIsDpdnOpen] = useState(false);
+  // const handleDpdnClick = () => {
+  //   setIsDpdnOpen(!isDpdnOpen);
+  // };
+
+  const handleDropdownClick = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+    
+    setIsOpen(true);
+    setSelectedOption("file");
+  };
+
+  const handleFileButtonClick = () => {
+    
+  };
+
+  const handleFolderButtonClick = () => {
+    setIsOpen(true);
+    setSelectedOption("folder");
+  };
+
+  
   return (
    <>
     
    <div className="container">
-   <h2>My Files</h2>
+    <div className="top"> 
+    <div id='header-name'> 
+    {isRoot? <><RiSkipBackLine className="srch"/> / </>:<></> }
+    {isfolder?<><a href='/home'>FolderName</a></>:<>Files</> }
+    </div>
+
+    <div id = 'button-div'> 
+    <button onClick={handleDropdownClick} className="upld">
+          create
+          <span>
+            <RiUploadCloud2Line className="ld" />
+          </span>
+        </button>
+        <button onClick={handleDropdownClick} className="upld">
+          Upload
+          <span>
+            <RiUploadCloud2Line className="ld" />
+          </span>
+        </button>
+
+        {isDropdownOpen && (
+          <Modal isOpen={isOpen} setIsOpen={setIsOpen} type={selectedOption} />
+        )}
+      </div>
+    </div>
+
+  
   <ul className="responsive-table">
     <li className="table-header">
      

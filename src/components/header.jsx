@@ -1,14 +1,18 @@
-import React, { useState } from "react";
 import "./style.css";
-import logo from "../images/logo.png";
-import { CiSearch } from "react-icons/ci";
+
+import { CiLogout, CiSearch } from "react-icons/ci";
+import React, { useState } from "react";
 // import { MdArrowDropDownCircle } from "react-icons/md";
-import { RiUploadCloud2Line, RiFolderAddLine } from "react-icons/ri";
-import Modal from "./Pages/Modal";
+import { RiFolderAddLine, RiUploadCloud2Line } from "react-icons/ri";
+
 import Create from "./Pages/createFolder";
 import Main from "./Pages/main";
+import Modal from "./Pages/Modal";
+import logo from "../images/logo.png";
+import { useHistory } from "react-router-dom";
 
 const Header = () => {
+  const history = useHistory();
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -31,6 +35,10 @@ const Header = () => {
     setSelectedOption("folder");
   };
 
+  const handleLogout = () => {
+    window.location.href = '/login';  };
+ 
+
   return (
     <>
       <div id="nav">
@@ -39,55 +47,12 @@ const Header = () => {
         <button type="search" id="bt">
           <CiSearch className="srch" />
         </button>
-        <button id="bt-ad">admin</button>
+        <button  id="logout" onClick={handleLogout}>
+          <CiLogout className="srch" />
+        </button>
       </div>
 
-      <div id="main"> 
-        <div id="main-head">
-        <button type="add" className="crt">
-          <Create />
-          <span>
-            <RiFolderAddLine className="fld" />
-          </span>
-        </button>
 
-        <button onClick={handleDropdownClick} className="upld">
-          Upload
-          <span>
-            <RiUploadCloud2Line className="ld" />
-          </span>
-        </button>
-
-        {isDropdownOpen && (
-          <div className="dpdwn">
-            <button onClick={handleFileButtonClick} className="dd-btn">
-              File
-            </button>
-            <button onClick={handleFolderButtonClick} className="dd-btn">
-              Folder
-            </button>
-          </div>
-        )}
-
-        {/* <button onClick={handleDpdnClick} className='sort'>
-         Sort
-          <span><MdArrowDropDownCircle className='srt' /></span>
-        </button>
-
-        {isDpdnOpen && (
-          <div className='dpdn'>
-            <button  className='dd1-btn'>by-name</button>
-            <button className='dd1-btn'>by-size</button>
-            <button className='dd1-btn'>by-date</button>
-          </div>
-        )} */}
-
-        <Modal isOpen={isOpen} setIsOpen={setIsOpen} type={selectedOption} />
-       
-        </div>
-      </div>
-      
-      <Main/>
     </>
   );
 };
