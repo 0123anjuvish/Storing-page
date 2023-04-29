@@ -34,9 +34,9 @@ function Files() {
 
   return (
     <form onSubmit={handleSubmit}>
-    
+    {/* <div className="h5">Select here</div> */}
       <input type="file" className="choose" onChange={handleOnChange} />
-      <button type="submit" className="ul">Upload File</button>
+      <button type="submit" className="ul">Upload</button>
     </form>
   );
 }

@@ -1,63 +1,54 @@
-// import React, { useState } from 'react';
+
+
+import React from 'react';
+import { RiCloseLine } from "react-icons/ri";
 
 import Folder from "./Folder";
 import Files from "./My files";
-// function ModalBox() {
-//   return (
-//     <div className="modal">
-//       <div className="modal-content">
-//         <h2>Modal Title</h2>
-//         <p>Modal content goes here...</p>
-//       </div>
-//     </div>
-//   );
-// }
 
-// function Modal() {
-//   const [showModal, setShowModal] = useState(false);
+const Modal = ({ isOpen, setIsOpen, type }) => {
+  const handleClose = () => {
+    setIsOpen(false);
+  }
 
-//   function handleModalOpen() {
-//     setShowModal(true);
-//   }
+  const renderContent = () => {
+    if (type === 'folder') {
+      return <Folder />;
+    } else if (type === 'file') {
+      return <Files />;
+    }
+  }
 
-//   function handleModalClose() {
-//     setShowModal(false);
-//   }
-
-//   return (
-//     <div>
-//       <button onClick={handleModalOpen}>Open Modal</button>
-//       {showModal && (
-//         <div className="modal-overlay" onClick={handleModalClose}>
-//           <ModalBox />
-//         </div>
-//       )}
-//     </div>
-//   );
-// }
-
-// export default Modal;
-
-function Modal({ type, name, onClose }) {
   return (
-    <div className="modal">
-      <div className="modal-content">
-        {/* <h2>
-          Upload {type === 'folder' ? 'Folder' : 'File'}: {name}
-        </h2> */}
-        {type === 'folder' && (
-          <div>
-           <Folder/>
+    <>
+      {isOpen && <div className="darkBG" onClick={handleClose} />}
+      <div className="centered">
+        {isOpen && (
+          <div className="modal1">
+            <div className="modalHeader">
+              <h5 className="heading">Upload {type === 'folder' ? 'Folder' : 'File'}</h5>
+            </div>
+            <button className="closeBtn" onClick={handleClose}>
+              <RiCloseLine style={{ marginBottom: "-3px" }} />
+            </button>
+            <div className="modalContent">
+              {renderContent()}
+            </div>
+            <div className="modalActions">
+              <div className="actionsContainer">
+                <button className="deleteBtn" onClick={handleClose}>
+                 Clear
+                </button>
+                {/* <button className="cancelBtn" onClick={handleClose}>
+                  Cancel
+                </button> */}
+              </div>
+            </div>
           </div>
         )}
-        {type === 'file' && (
-          <div>
-           <Files/>
-          </div>
-        )}
-        <button onClick={onClose} className="cls">X</button>
       </div>
-    </div>
+    </>
   );
-}
+};
+
 export default Modal;

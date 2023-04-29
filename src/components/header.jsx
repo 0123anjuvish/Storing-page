@@ -1,141 +1,95 @@
-// import React,{useState} from 'react';
-// import './style.css';
-// import logo from '../images/logo.png';
-// import { CiSearch } from "react-icons/ci";
-// import { RiArrowDownSLine,RiUploadCloud2Line,RiFolderAddLine} from "react-icons/ri";
-// import Modal from './Pages/Modal';
-// const Header = () => {
-//     const [isOpen, setIsOpen] = useState(false); 
-//   const [selectedOption, setSelectedOption] = useState(''); 
-
- 
-//   const handleDropdownClick = () => {
-//     setIsOpen(!isOpen); 
-//   };
-
- 
-//   const handleOptionSelect = (option) => {
-//     // setSelectedOption(option); 
-//     setIsOpen(false);
-//   };
-
-//   return (
-//    <>
-//   <div id='nav'>
-    
-//     <img src={logo} alt='logo'/>
-//   <input type='search' id='inp' placeholder='Search anything...'/>
-//    <button type='search' id='bt' ><CiSearch className='srch'/></button>
-//    <button id="bt-ad">admin</button>
-//   </div>
- 
-//   <div id='main'>
-//     <button className='crt'><Modal/></button>
-//     <button type='add' className='crt'>Create
-//     <span><RiFolderAddLine className='fld' /></span>
-//     </button>
-    
-//     <button onClick={handleDropdownClick} className='upld'>
-   
-//     Upload
-//     <span> <RiUploadCloud2Line className='ld' /></span>
-//     </button>
-//       {isOpen && ( 
-//         <div className='dpdwn'>
-//           <button onClick={() => handleOptionSelect('files')} className='dd-btn'>Files</button>
-//           <button onClick={() => handleOptionSelect('folders')} className='dd-btn'>Folders</button>
-//         </div>
-//       )}
-    
-
-//   </div>
- 
-//    </>
-//   )
-// }
-
-
-// export default Header;
-
-
-// Header.js
-
-import React, { useState } from 'react';
-import './style.css';
-import logo from '../images/logo.png';
+import React, { useState } from "react";
+import "./style.css";
+import logo from "../images/logo.png";
 import { CiSearch } from "react-icons/ci";
+// import { MdArrowDropDownCircle } from "react-icons/md";
 import { RiUploadCloud2Line, RiFolderAddLine } from "react-icons/ri";
-import Modal from './Pages/Modal';
-import Create from './Pages/createFolder';
+import Modal from "./Pages/Modal";
+import Create from "./Pages/createFolder";
+import Main from "./Pages/main";
 
 const Header = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [selectedOption, setSelectedOption] = useState(null);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  // const [isDpdnOpen, setIsDpdnOpen] = useState(false);
+  // const handleDpdnClick = () => {
+  //   setIsDpdnOpen(!isDpdnOpen);
+  // };
 
   const handleDropdownClick = () => {
     setIsDropdownOpen(!isDropdownOpen);
   };
 
-  const handleFileClick = (fileName) => {
-    setSelectedOption({ type: 'file', fileName });
-    setIsDropdownOpen(false);
+  const handleFileButtonClick = () => {
     setIsOpen(true);
-  }
+    setSelectedOption("file");
+  };
 
-  const handleFolderClick = (folderName) => {
-    setSelectedOption({ type: 'folder', folderName });
-    setIsDropdownOpen(false);
+  const handleFolderButtonClick = () => {
     setIsOpen(true);
-  }
-
-  const handleCloseModal = () => {
-    setSelectedOption(null);
-    setIsOpen(false);
-  }
+    setSelectedOption("folder");
+  };
 
   return (
     <>
-      <div id='nav'>
-
-        <img src={logo} alt='logo' />
-        <input type='search' id='inp' placeholder='Search anything...' />
-        <button type='search' id='bt' ><CiSearch className='srch' /></button>
+      <div id="nav">
+        <img src={logo} alt="logo" />
+        <input type="search" id="inp" placeholder="Search anything..." />
+        <button type="search" id="bt">
+          <CiSearch className="srch" />
+        </button>
         <button id="bt-ad">admin</button>
       </div>
 
-      <div id='main'>
-        <button type='add' className='crt'><Create/>
-          <span><RiFolderAddLine className='fld' /></span>
+      <div id="main"> 
+        <div id="main-head">
+        <button type="add" className="crt">
+          <Create />
+          <span>
+            <RiFolderAddLine className="fld" />
+          </span>
         </button>
 
-        <button onClick={handleDropdownClick} className='upld'>
+        <button onClick={handleDropdownClick} className="upld">
           Upload
-          <span> <RiUploadCloud2Line className='ld' /></span>
+          <span>
+            <RiUploadCloud2Line className="ld" />
+          </span>
         </button>
-        
+
         {isDropdownOpen && (
-          <div className='dpdwn'>
-            <button onClick={() => handleFileClick('file')} className='dd-btn'>File </button>
-            {/* <button onClick={() => handleFileClick('file2')} className='dd-btn'>File 2</button> */}
-            <button onClick={() => handleFolderClick('folder')} className='dd-btn'>Folder</button>
-            {/* <button onClick={() => handleFolderClick('folder2')} className='dd-btn'>Folder 2</button> */}
+          <div className="dpdwn">
+            <button onClick={handleFileButtonClick} className="dd-btn">
+              File
+            </button>
+            <button onClick={handleFolderButtonClick} className="dd-btn">
+              Folder
+            </button>
           </div>
         )}
 
-      </div>
+        {/* <button onClick={handleDpdnClick} className='sort'>
+         Sort
+          <span><MdArrowDropDownCircle className='srt' /></span>
+        </button>
 
-      {isOpen && selectedOption && (
-        <Modal
-          type={selectedOption.type}
-          name={selectedOption.fileName || selectedOption.folderName}
-          onClose={handleCloseModal}
-        />
-      )}
+        {isDpdnOpen && (
+          <div className='dpdn'>
+            <button  className='dd1-btn'>by-name</button>
+            <button className='dd1-btn'>by-size</button>
+            <button className='dd1-btn'>by-date</button>
+          </div>
+        )} */}
+
+        <Modal isOpen={isOpen} setIsOpen={setIsOpen} type={selectedOption} />
+       
+        </div>
+      </div>
+      
+      <Main/>
     </>
-  )
-}
+  );
+};
 
 export default Header;
-
-

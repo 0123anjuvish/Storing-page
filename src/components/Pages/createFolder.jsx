@@ -1,35 +1,38 @@
 import React, { useState} from 'react';
-
+import Mode from './openmodal';
 function Create() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isOpen, setIsOpen] = useState(false);
   const [folderName, setFolderName] = useState('');
 
   const handleInputChange = (event) => {
     setFolderName(event.target.value);
   };
 
-  const handleModalClose = () => {
-    setIsModalOpen(false);
+  const handleClose = () => {
+    setIsOpen(false);
     setFolderName('');
-  };
+  }
 
   const handleCreateFolder = () => {
-    // logic to create folder with the given name
+   
     console.log(`Creating folder: ${folderName}`);
-    handleModalClose();
+    handleClose();
   };
 
   return (
     <>
-      <button onClick={() => setIsModalOpen(true)}>Create Folder</button>
+    <button className='crt1' onClick={() => setIsOpen(true)}>
+Create
+</button>
 
-      {isModalOpen && (
-        <div className="modal">
-          <div className="modal-content">
-            <h2>Create Folder</h2>
+      {isOpen && <Mode setIsOpen={setIsOpen} />}
+      {isOpen && (
+        <div className="crt-div">
+          <div className="crt-cont">
+            
             <input type="text" value={folderName} onChange={handleInputChange} />
             <button onClick={handleCreateFolder}>Create</button>
-            <button onClick={handleModalClose}>Cancel</button>
+            <button onClick={handleClose}>Cancel</button>
           </div>
         </div>
       )}
