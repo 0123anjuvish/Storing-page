@@ -1,17 +1,25 @@
 import {baseUrl, handleApiResponse} from './master';
+import axios from 'axios';
 
-async function uploadFile(filedata) {
-    const response = await fetch(`${baseUrl}/uploadfile`, {
-      method: 'POST',
+
+async function uploadFile(formData) {
+  const token = localStorage.getItem('token');
+    const config = {
       headers: {
-        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
-        'Content-Type': "multipart/form-data; boundary=<calculated when request is sent>"
+        Authorization: `Bearer ${token}`,
+        'Content-Type': 'multipart/form-data',
       },
-      body: filedata
-    });
-  
-    const fildata = await handleApiResponse(response);
-    return fildata;
+    };
+    const response = await axios.post(`${baseUrl}/uploadfile`, formData, config);
+    console.log(response, response.status)
+    if (response.status == 200) {
+      const json =  response.data
+      return json;
+    } else {
+      const errorJson = await response.json(); 
+      throw new Error(errorJson.message);
+    }
+
   }
 
 //   var formdata = new FormData();
@@ -19,7 +27,7 @@ async function uploadFile(filedata) {
 // formdata.append("folder", "test2");
 
 async function getFiles(foldername) {
-    const response = await fetch(`${baseUrl}/getfolder`, {
+    const response = await fetch(`${baseUrl}/getfiles`, {
       method: 'POST',
       headers: {
         "Authorization" : `Bearer ${localStorage.getItem("token")}`,
@@ -35,7 +43,7 @@ async function getFiles(foldername) {
   }
 
 async function getFile(fileid) {
-    const response = await fetch(`${baseUrl}/getfolder`, {
+    const response = await fetch(`${baseUrl}/getfile`, {
       method: 'POST',
       headers: {
         "Authorization" : `Bearer ${localStorage.getItem("token")}`,
@@ -45,9 +53,26 @@ async function getFile(fileid) {
         "file_id" : fileid
       })
     });
-  
-    const loginData = await handleApiResponse(response);
-    return loginData;
+    const blob = await response.blob();
+    const fileUrl = URL.createObjectURL(blob);
+    return fileUrl
+    ;
   }
 
-export {uploadFile,getFiles,getFile};
+  async function deleteFile(fileid) {
+    const response = await fetch(`${baseUrl}/deletefile`, {
+      method: 'POST',
+      headers: {
+        "Authorization" : `Bearer ${localStorage.getItem("token")}`,
+        'Content-Type':  'application/json'
+      },
+      body: JSON.stringify({
+        "file_id" : fileid
+      })
+    });
+    const loginData = await handleApiResponse(response);
+    return loginData;
+    ;
+  }
+
+export {uploadFile,getFiles,getFile,deleteFile};

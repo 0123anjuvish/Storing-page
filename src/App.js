@@ -3,16 +3,17 @@ import './App.css';
 import { Route, BrowserRouter as Router, Switch } from 'react-router-dom';
 
 import Header from './components/header';
-import Home from './components/home';
+import Home from './components/home'
 import Login from './components/login'
 
 function App() {
   return (
     <div className="App">
+      <Header />
     <Router>
-    <Header/>
     <Switch>
-      <Route exact path="/" component={Home} />
+       <Route exact path ="/home/" component={Home} />
+       <Route  path ="/home/:folderName" component={Home} />
       <Route path="/login" component={Login} />
     </Switch>
   </Router>,

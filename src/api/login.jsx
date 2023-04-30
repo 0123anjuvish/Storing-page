@@ -16,4 +16,5 @@ async function login(email, password) {
     return loginData;
   }
 
-export default login;
+
+export {login};
